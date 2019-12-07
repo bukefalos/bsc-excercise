@@ -53,7 +53,7 @@ public class InMemoryPostalPackageRepositoryTest {
   }
 
   @Test
-  public void thatGroupedSummaryIsThreadSafe() throws InterruptedException {
+  public void thatReadWhileWriteIsThreadSafe() throws InterruptedException {
     Thread updateThread = updateThread();
     ThreadWithException readThread = readThread();
     updateThread.start();
