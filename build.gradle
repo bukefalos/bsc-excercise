@@ -3,7 +3,7 @@ plugins {
     id "io.freefair.lombok" version "$lombokPluginVersion"
 }
 
-group 'com.bsc'
+group 'com.bsc.postalservice'
 version '1.0'
 
 sourceCompatibility = 1.8
@@ -13,5 +13,6 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: "$jUnitVersion"
+    implementation "org.quartz-scheduler:quartz:$quartzVersion"
+    testCompile "junit:junit:$jUnitVersion"
 }
