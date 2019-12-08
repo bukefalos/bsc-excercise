@@ -9,6 +9,10 @@ import static org.quartz.TriggerBuilder.newTrigger;
 
 public class ConsoleSummaryWriterJob implements Job {
 
+  private static final String JOB_TRIGGER_ID = "summaryTrigger";
+  private static final String JOB_ID = "summaryJob";
+  private static final String JOB_GROUP = "group1";
+
   private PostalPackageRepository repository;
 
   @Override
@@ -26,14 +30,14 @@ public class ConsoleSummaryWriterJob implements Job {
 
   public static JobDetail createJobDefinition(JobDataMap jobDataMap) {
     return newJob(ConsoleSummaryWriterJob.class)
-        .withIdentity("summaryJob", "group1")
+        .withIdentity(JOB_ID, JOB_GROUP)
         .usingJobData(jobDataMap)
         .build();
   }
 
   public static Trigger createTriggerDefinition() {
     return  newTrigger()
-        .withIdentity("summaryTrigger", "group1")
+        .withIdentity(JOB_TRIGGER_ID, JOB_GROUP)
         .startNow()
         .withSchedule(simpleSchedule()
             .withIntervalInSeconds(60)
