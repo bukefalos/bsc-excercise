@@ -1,71 +1,104 @@
 package com.bsc.postalservice;
 
-import com.bsc.postalservice.cli.*;
+import com.bsc.postalservice.cli.InputProcessor;
+import com.bsc.postalservice.cli.TerminateException;
 import com.bsc.postalservice.fee.PostalFeeService;
-import com.bsc.postalservice.postalpackage.domain.PostalPackageRepository;
 import com.bsc.postalservice.postalpackage.infrastructure.InMemoryPostalPackageRepository;
-import com.bsc.postalservice.schedule.ConsoleSummaryWriterJob;
 import com.bsc.postalservice.schedule.FixedPeriodJobDetail;
 import com.bsc.postalservice.schedule.FixedPeriodJobScheduler;
+import com.bsc.postalservice.schedule.Job;
+import lombok.val;
+import org.apache.commons.cli.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.RejectedExecutionException;
 
+import static com.bsc.postalservice.ApplicationInitializer.*;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Application {
 
+  private static final String OPTION_INIT_PACKAGES = "i";
+  private static final String OPTION_FEE_STRUCTURE = "f";
+
   public static void main(String[] args) {
     System.out.println("Hi, this is BSC postal delivery service");
 
-    PostalPackageRepository postalPackageRepository = new InMemoryPostalPackageRepository();
-    PostalFeeService postalFeeService = new PostalFeeService();
+    Option initialPackagesFile = Option.builder(OPTION_INIT_PACKAGES)
+        .argName("init file path")
+        .longOpt("init")
+        .optionalArg(true)
+        .hasArg()
+        .numberOfArgs(1)
+        .argName("FILE")
+        .valueSeparator()
+        .desc("Define initial packages file input. Format of file should for each line:" +
+            "<weight><space><postal_code>\n" +
+            "weight: integer|decimal(up to 3 decimal spaces)\n" +
+            "postal_code: integer-char(5 digits)")
+        .build();
 
-    List<CLIOperation> packageOperations = Arrays.asList(
-        new OperationAddPackage(postalPackageRepository, postalFeeService),
-        new OperationQuit()
-    );
+    Option initialFeesFile = Option.builder(OPTION_FEE_STRUCTURE)
+        .argName("fee file path")
+        .longOpt("fees")
+        .optionalArg(true)
+        .hasArg()
+        .numberOfArgs(1)
+        .argName("FILE")
+        .valueSeparator()
+        .desc("Define fee structure file input. Format of file should for each line:\n" +
+            "<weight><space><fee>\n" +
+            "weight: integer|decimal(up to 3 decimal spaces)\n" +
+            "fee: decimal(fixed 2 decimal spaces)")
+        .build();
 
-    List<CLIOperation> feeOperations = Collections.singletonList(
-        new OperationAddFee(postalFeeService)
-    );
+    Options options = new Options();
+    options.addOption(initialPackagesFile);
+    options.addOption(initialFeesFile);
 
-    InputProcessor packageProcessor = new InputProcessor(new OperationsFactory(packageOperations));
-    InputProcessor feeProcessor = new InputProcessor(new OperationsFactory(feeOperations));
-
+    CommandLineParser parser = new DefaultParser();
     FixedPeriodJobScheduler scheduler = new FixedPeriodJobScheduler();
-    ConsoleSummaryWriterJob job = new ConsoleSummaryWriterJob(postalPackageRepository, true);
 
     try {
-      if (args.length >= 1) {
-        if(args.length == 2) {
-          System.out.println("Processing fee structure input");
-          feeProcessor.processInput(new FileInputStream(new File(args[1])), System.out);
-        }
+      CommandLine line = parser.parse(options, args);
 
-        System.out.println("Processing file input");
-        packageProcessor.processInput(new FileInputStream(new File(args[0])), System.out);
-      }
+      val repository = new InMemoryPostalPackageRepository();
+      val feeService = new PostalFeeService();
+      val inputProcessor = postalPackageInputProcessor(repository, feeService);
 
-
-      scheduler.scheduleJob(job, new FixedPeriodJobDetail(5, 60, SECONDS));
+      processFeesOption(line, feeService);
+      processInitialPackagesOption(line, inputProcessor);
+      scheduleJob(scheduler, createConsoleSummaryJob(repository, line.hasOption(OPTION_FEE_STRUCTURE)));
 
       System.out.println("Processing user input ");
-      packageProcessor.processInput(System.in, System.out);
-
+      inputProcessor.processInput(System.in, System.out);
+    } catch (ParseException exp) {
+      System.err.println("Parsing failed.  Reason: " + exp.getMessage());
+      HelpFormatter formatter = new HelpFormatter();
+      formatter.printHelp("bsc", options, true);
     } catch (FileNotFoundException fnf) {
-      System.out.println("Cannot load initial data");
+      System.err.println("Not able to load initial file");
     } catch (TerminateException terminate) {
       System.out.println("Goodbye");
-    } catch (RejectedExecutionException se) {
-      System.out.println("Unable to run schedule");
     } finally {
       scheduler.shutDown();
+    }
+  }
+
+  private static void scheduleJob(FixedPeriodJobScheduler scheduler, Job job) {
+    scheduler.scheduleJob(job, new FixedPeriodJobDetail(5, 60, SECONDS));
+  }
+
+  private static void processFeesOption(CommandLine line, PostalFeeService feeService) throws FileNotFoundException, TerminateException {
+    if (line.hasOption(OPTION_FEE_STRUCTURE)) {
+      processFees(
+          feeInputProcessor(feeService),
+          line.getOptionValue(OPTION_FEE_STRUCTURE));
+    }
+  }
+
+  private static void processInitialPackagesOption(CommandLine line, InputProcessor processor) throws FileNotFoundException, TerminateException {
+    if (line.hasOption(OPTION_INIT_PACKAGES)) {
+      processInitialPackages(processor, line.getOptionValue(OPTION_INIT_PACKAGES));
     }
   }
 }

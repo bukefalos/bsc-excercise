@@ -53,7 +53,7 @@ public class OperationAddPackageTest {
   }
 
   @Test
-  public void withFeeService() {
+  public void operationWorksWithFeeService() {
     OperationAddPackage operationAddPackage = new OperationAddPackage(new InMemoryPostalPackageRepository(), mockFeeService);
     operationAddPackage.execute("12 12345");
 

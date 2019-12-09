@@ -7,10 +7,6 @@ public class ConsoleSummaryWriterJob implements Job {
   private PostalPackageRepository repository;
   private Boolean includeFees;
 
-  public ConsoleSummaryWriterJob(PostalPackageRepository repository) {
-    this(repository, false);
-  }
-
   public ConsoleSummaryWriterJob(PostalPackageRepository repository, Boolean includeFees) {
     this.repository = repository;
     this.includeFees = includeFees;
