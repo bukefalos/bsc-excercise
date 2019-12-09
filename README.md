@@ -14,7 +14,7 @@ Postal package program exercise which is able to:
  - JAVA 8+
 
 ## Build
-In order to prepare run scripts run in project root:
+In order to prepare executable scripts, run in project root:
 
     ./gradlew clean install
     
@@ -22,7 +22,7 @@ After installation was successful, find binaries at `build/install/postalservice
 
    
 ## Usage
-To run program
+To run program, run `postalservice` script `bin` directory
 
     usage: postalservice [-F <FILE>] [-I <FILE>]
      -F,--fees <FILE>   Define fee structure file input. Format of file should
