@@ -13,6 +13,6 @@ repositories {
 }
 
 dependencies {
-    implementation "org.quartz-scheduler:quartz:$quartzVersion"
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
     testCompile "junit:junit:$jUnitVersion"
 }

@@ -3,18 +3,18 @@ package com.bsc.postalservice;
 import com.bsc.postalservice.cli.*;
 import com.bsc.postalservice.postalpackage.domain.PostalPackageRepository;
 import com.bsc.postalservice.postalpackage.infrastructure.InMemoryPostalPackageRepository;
-import com.bsc.postalservice.schedule.SimpleJobScheduler;
-import org.quartz.JobDataMap;
-import org.quartz.SchedulerException;
+import com.bsc.postalservice.schedule.ConsoleSummaryWriterJob;
+import com.bsc.postalservice.schedule.FixedPeriodJobDetail;
+import com.bsc.postalservice.schedule.FixedPeriodJobScheduler;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 
-import static com.bsc.postalservice.schedule.ConsoleSummaryWriterJob.createJobDefinition;
-import static com.bsc.postalservice.schedule.ConsoleSummaryWriterJob.createTriggerDefinition;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Application {
 
@@ -31,13 +31,11 @@ public class Application {
     OperationsFactory cmdOperationsFactory = new OperationsFactory(operations);
     InputProcessor cmdProcessor = new InputProcessor(cmdOperationsFactory);
 
-    SimpleJobScheduler scheduler = new SimpleJobScheduler();
-
-    JobDataMap jobDataMap = new JobDataMap();
-    jobDataMap.put("repository", postalPackageRepository);
+    FixedPeriodJobScheduler scheduler = new FixedPeriodJobScheduler();
+    ConsoleSummaryWriterJob job = new ConsoleSummaryWriterJob(postalPackageRepository);
 
     try {
-      scheduler.scheduleJob(createJobDefinition(jobDataMap), createTriggerDefinition());
+      scheduler.scheduleJob(job, new FixedPeriodJobDetail(5, 60, SECONDS));
 
       if (args.length == 1) {
         System.out.println("Processing file input");
@@ -51,8 +49,8 @@ public class Application {
       System.out.println("Cannot load initial data");
     } catch (TerminateException terminate) {
       System.out.println("Goodbye");
-    } catch (SchedulerException se) {
-      System.out.println("Unable to run scheduler");
+    } catch (RejectedExecutionException se) {
+      System.out.println("Unable to run schedule");
     } finally {
       scheduler.shutDown();
     }
