@@ -1,6 +1,7 @@
 package com.bsc.postalservice.schedule;
 
 import com.bsc.postalservice.postalpackage.PostalPackageRepository;
+import com.bsc.postalservice.postalpackage.PostalPackageSummary;
 
 public class ConsoleSummaryWriterJob implements Job {
 
@@ -16,7 +17,7 @@ public class ConsoleSummaryWriterJob implements Job {
   public void execute() throws JobExecutionException {
     StringBuilder stringBuilder = new StringBuilder();
     stringBuilder.append("\n*** Package summary ***\n");
-    stringBuilder.append(repository.getGroupedSummaryByCode().toString(includeFees));
+    stringBuilder.append(new PostalPackageSummary(repository.getAll()).toString(includeFees));
     stringBuilder.append("=== Package summary end ===");
     System.out.println(stringBuilder.toString());
   }

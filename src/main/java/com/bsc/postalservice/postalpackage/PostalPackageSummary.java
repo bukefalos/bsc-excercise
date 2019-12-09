@@ -5,28 +5,29 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.reverseOrder;
+import static java.util.stream.Collectors.toMap;
 
 public class PostalPackageSummary {
 
-  private Map<String, PostalPackage> summary;
+  private final Map<String, PostalPackage> summary;
 
   private DecimalFormat weightFormat = new DecimalFormat("0.000");
   private DecimalFormat feeFormat = new DecimalFormat("0.00");
 
-  public PostalPackageSummary() {
-    summary = new HashMap<>();
+  PostalPackageSummary() {
+    summary = new ConcurrentHashMap<>();
   }
 
-  public PostalPackageSummary(List<PostalPackage> postalPackages)  {
+  public PostalPackageSummary(List<PostalPackage> postalPackages) {
     this();
     postalPackages.forEach(this::addToSummary);
   }
 
-  public void addToSummary(PostalPackage newPostalPackage) {
+  void addToSummary(PostalPackage newPostalPackage) {
     PostalPackage postalCodeSummary = summary.get(newPostalPackage.getPostalCode());
     if (postalCodeSummary != null) {
       Float summaryWeight = postalCodeSummary.getWeight() + newPostalPackage.getWeight();
@@ -66,7 +67,7 @@ public class PostalPackageSummary {
       stringBuilder.append(key);
       stringBuilder.append(" ");
       stringBuilder.append(weightFormat.format(postalCodeSummary.getWeight()));
-      if(includeFees) {
+      if (includeFees) {
         stringBuilder.append(" ");
         stringBuilder.append(feeFormat.format(postalCodeSummary.getFee()));
       }
@@ -79,7 +80,6 @@ public class PostalPackageSummary {
     return summary.entrySet()
         .stream()
         .sorted(comparing(summary -> summary.getValue().getWeight(), reverseOrder()))
-        .collect(Collectors.toMap(
-            Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
   }
 }

@@ -1,13 +1,12 @@
-package com.bsc.postalservice.postalpackage.infrastructure;
+package com.bsc.postalservice.postalpackage;
 
-import com.bsc.postalservice.postalpackage.InMemoryPostalPackageRepository;
-import com.bsc.postalservice.postalpackage.PostalPackage;
-import com.bsc.postalservice.postalpackage.PostalPackageRepository;
 import com.bsc.postalservice.utils.ThreadWithException;
 import lombok.val;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.bsc.postalservice.utils.TestUtils.randomFloat;
+import static com.bsc.postalservice.utils.TestUtils.randomSingleNumber;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -30,27 +29,26 @@ public class InMemoryPostalPackageRepositoryTest {
     postalPackageRepository.add(new PostalPackage("04033", 5.5f));
     postalPackageRepository.add(new PostalPackage("04011", 6.6f));
 
-    val summary =  postalPackageRepository.getGroupedSummaryByCode();
-    assertThat(summary.size(), is(3));
-    assertThat(summary.getTotalWeight("04011"), is(7.7f));
-    assertThat(summary.getTotalWeight("04022"), is(5.5f));
-    assertThat(summary.getTotalWeight("04033"), is(5.5f));
+    val summary = postalPackageRepository.getAll();
+    assertThat(summary.size(), is(5));
+    assertThat(summary.get(0).getPostalCode(), is("04011"));
+    assertThat(summary.get(0).getWeight(), is(1.1f));
   }
 
   @Test
   public void addAll() {
-    val postalPackages = asList(new PostalPackage("04011", 1.1f),
+    val postalPackages = asList(
+        new PostalPackage("04011", 1.1f),
         new PostalPackage("04022", 2.2f),
         new PostalPackage("04022", 3.3f),
         new PostalPackage("04033", 5.5f),
         new PostalPackage("04011", 6.6f)
     );
     postalPackageRepository.addAll(postalPackages);
-    val summary = postalPackageRepository.getGroupedSummaryByCode();
-    assertThat(summary.size(), is(3));
-    assertThat(summary.getTotalWeight("04011"), is(7.7f));
-    assertThat(summary.getTotalWeight("04022"), is(5.5f));
-    assertThat(summary.getTotalWeight("04033"), is(5.5f));
+    val summary = postalPackageRepository.getAll();
+    assertThat(summary.size(), is(5));
+    assertThat(summary.get(0).getPostalCode(), is("04011"));
+    assertThat(summary.get(0).getWeight(), is(1.1f));
   }
 
   @Test
@@ -66,7 +64,7 @@ public class InMemoryPostalPackageRepositoryTest {
   private Thread updateThread() {
    return new Thread(() -> {
       for(int i = 0; i < 10_000; i ++) {
-        postalPackageRepository.add(new PostalPackage("1234" + randomNumAsString(), randomFloat()));
+        postalPackageRepository.add(new PostalPackage("1234" + randomSingleNumber(), randomFloat(1)));
       }
     });
   }
@@ -74,16 +72,8 @@ public class InMemoryPostalPackageRepositoryTest {
   private ThreadWithException readThread() {
     return new ThreadWithException(() -> {
       for(int i = 0; i < 10_000; i ++) {
-        postalPackageRepository.getGroupedSummaryByCode();
+        postalPackageRepository.getAll();
       }
     });
-  }
-
-  private String randomNumAsString() {
-    return String.valueOf(Math.random() * 9 + 1);
-  }
-
-  private Float randomFloat() {
-    return (float) Math.random() * 10;
   }
 }

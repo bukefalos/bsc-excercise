@@ -8,5 +8,5 @@ public interface PostalPackageRepository {
 
     void addAll(List<PostalPackage> postalPackages);
 
-    PostalPackageSummary getGroupedSummaryByCode();
+    List<PostalPackage> getAll();
 }

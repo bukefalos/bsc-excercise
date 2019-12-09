@@ -24,9 +24,7 @@ public class InMemoryPostalPackageRepository implements PostalPackageRepository 
   }
 
   @Override
-  public PostalPackageSummary getGroupedSummaryByCode() {
-    synchronized (postalPackageList) {
-      return new PostalPackageSummary(postalPackageList);
-    }
+  public List<PostalPackage> getAll() {
+    return new ArrayList<>(postalPackageList);
   }
 }
