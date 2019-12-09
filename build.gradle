@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'application'
     id "io.freefair.lombok" version "$lombokPluginVersion"
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version "$coverallsPluginVersion"
 }
 application {
     mainClassName = 'com.bsc.postalservice.Application'
@@ -22,4 +24,15 @@ dependencies {
 
     testCompile "org.mockito:mockito-core:$mockitoCoreVersion"
     testCompile "junit:junit:$jUnitVersion"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
+}
+
+coveralls {
+    jacocoReportPath 'build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml'
 }
