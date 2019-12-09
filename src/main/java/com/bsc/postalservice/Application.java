@@ -17,44 +17,13 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Application {
 
-  private static final String OPTION_INIT_PACKAGES = "I";
-  private static final String OPTION_FEE_STRUCTURE = "F";
+  static final String OPTION_INIT_PACKAGES = "I";
+  static final String OPTION_FEE_STRUCTURE = "F";
 
   public static void main(String[] args) {
     System.out.println("Hi, this is BSC postal delivery service");
 
-    Option initialPackagesFile = Option.builder(OPTION_INIT_PACKAGES)
-        .argName("init file path")
-        .longOpt("init")
-        .optionalArg(true)
-        .hasArg()
-        .numberOfArgs(1)
-        .argName("FILE")
-        .valueSeparator()
-        .desc("Define initial packages file input. Format of file should for each line:" +
-            "<weight><space><postal_code>\n" +
-            "weight: integer|decimal(up to 3 decimal spaces)\n" +
-            "postal_code: integer-char(5 digits)")
-        .build();
-
-    Option initialFeesFile = Option.builder(OPTION_FEE_STRUCTURE)
-        .argName("fee file path")
-        .longOpt("fees")
-        .optionalArg(true)
-        .hasArg()
-        .numberOfArgs(1)
-        .argName("FILE")
-        .valueSeparator()
-        .desc("Define fee structure file input. Format of file should for each line:\n" +
-            "<weight><space><fee>\n" +
-            "weight: integer|decimal(up to 3 decimal spaces)\n" +
-            "fee: decimal(fixed 2 decimal spaces)")
-        .build();
-
-    Options options = new Options();
-    options.addOption(initialPackagesFile);
-    options.addOption(initialFeesFile);
-
+    Options options = createCLIOptions();
     CommandLineParser parser = new DefaultParser();
     FixedPeriodJobScheduler scheduler = new FixedPeriodJobScheduler();
 
