@@ -1,6 +1,10 @@
 plugins {
     id 'java'
+    id 'application'
     id "io.freefair.lombok" version "$lombokPluginVersion"
+}
+application {
+    mainClassName = 'com.bsc.postalservice.Application'
 }
 
 group 'com.bsc.postalservice'
