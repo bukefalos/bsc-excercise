@@ -17,8 +17,8 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Application {
 
-  private static final String OPTION_INIT_PACKAGES = "i";
-  private static final String OPTION_FEE_STRUCTURE = "f";
+  private static final String OPTION_INIT_PACKAGES = "I";
+  private static final String OPTION_FEE_STRUCTURE = "F";
 
   public static void main(String[] args) {
     System.out.println("Hi, this is BSC postal delivery service");
