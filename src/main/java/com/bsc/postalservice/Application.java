@@ -9,7 +9,10 @@ import com.bsc.postalservice.schedule.FixedPeriodJobDetail;
 import com.bsc.postalservice.schedule.FixedPeriodJobScheduler;
 import com.bsc.postalservice.schedule.Job;
 import lombok.val;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.ParseException;
 
 import java.io.FileNotFoundException;
 
@@ -24,16 +27,15 @@ public class Application {
   public static void main(String[] args) {
     System.out.println("Hi, this is BSC postal delivery service");
 
-    Options options = createCLIOptions();
-    CommandLineParser parser = new DefaultParser();
-    FixedPeriodJobScheduler scheduler = new FixedPeriodJobScheduler();
+    val options = createCLIOptions();
+    val parser = new DefaultParser();
+    val scheduler = new FixedPeriodJobScheduler();
+    val repository = new InMemoryPostalPackageRepository();
+    val feeService = new PostalFeeServiceImpl();
+    val inputProcessor = postalPackageInputProcessor(repository, feeService);
 
     try {
       CommandLine line = parser.parse(options, args);
-
-      val repository = new InMemoryPostalPackageRepository();
-      val feeService = new PostalFeeServiceImpl();
-      val inputProcessor = postalPackageInputProcessor(repository, feeService);
 
       processFeesOption(line, feeService);
       processInitialPackagesOption(line, inputProcessor);
