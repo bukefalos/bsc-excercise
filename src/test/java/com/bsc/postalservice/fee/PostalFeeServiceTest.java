@@ -48,4 +48,10 @@ public class PostalFeeServiceTest {
     assertThat(feeService.getFeeBasedOnWeight(12.0f), is(5.5f));
   }
 
+  @Test
+  public void thatFeeServiceWorksWithoutAnyEntries() {
+    PostalFeeService emptyFeeService = new PostalFeeService();
+    assertThat(emptyFeeService.getFeeBasedOnWeight(5.0f), is(0.0f));
+  }
+
 }

@@ -15,6 +15,10 @@ public class PostalFeeService {
     weightFeeStructure = new TreeMap<>();
   }
 
+  public void addFeeEntry(PostalFee postalFee) {
+    this.addFeeEntry(postalFee.getWeight(), postalFee.getPrice());
+  }
+
   public void addFeeEntry(Float weight, Float fee) {
     if(weightFeeStructure.get(weight) != null) {
       LOG.warn("Fee structure already contains weight: " + weight + " Overriding previous fee.");
