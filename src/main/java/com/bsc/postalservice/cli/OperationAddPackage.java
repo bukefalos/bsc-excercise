@@ -1,9 +1,9 @@
 package com.bsc.postalservice.cli;
 
 import com.bsc.postalservice.fee.PostalFeeService;
-import com.bsc.postalservice.postalpackage.domain.PostalPackage;
-import com.bsc.postalservice.postalpackage.domain.PostalPackageFormatException;
-import com.bsc.postalservice.postalpackage.domain.PostalPackageRepository;
+import com.bsc.postalservice.postalpackage.PostalPackage;
+import com.bsc.postalservice.postalpackage.PostalPackageFormatException;
+import com.bsc.postalservice.postalpackage.PostalPackageRepository;
 
 public class OperationAddPackage implements CLIOperation {
 

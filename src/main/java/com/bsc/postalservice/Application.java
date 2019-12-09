@@ -4,7 +4,7 @@ import com.bsc.postalservice.cli.InputProcessor;
 import com.bsc.postalservice.cli.TerminateException;
 import com.bsc.postalservice.fee.PostalFeeService;
 import com.bsc.postalservice.fee.PostalFeeServiceImpl;
-import com.bsc.postalservice.postalpackage.infrastructure.InMemoryPostalPackageRepository;
+import com.bsc.postalservice.postalpackage.InMemoryPostalPackageRepository;
 import com.bsc.postalservice.schedule.FixedPeriodJobDetail;
 import com.bsc.postalservice.schedule.FixedPeriodJobScheduler;
 import com.bsc.postalservice.schedule.Job;

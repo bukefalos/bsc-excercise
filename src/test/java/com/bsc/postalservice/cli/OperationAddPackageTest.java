@@ -1,7 +1,7 @@
 package com.bsc.postalservice.cli;
 
 import com.bsc.postalservice.fee.PostalFeeService;
-import com.bsc.postalservice.postalpackage.infrastructure.InMemoryPostalPackageRepository;
+import com.bsc.postalservice.postalpackage.InMemoryPostalPackageRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

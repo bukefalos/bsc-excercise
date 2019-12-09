@@ -1,7 +1,8 @@
 package com.bsc.postalservice.postalpackage.infrastructure;
 
-import com.bsc.postalservice.postalpackage.domain.PostalPackage;
-import com.bsc.postalservice.postalpackage.domain.PostalPackageRepository;
+import com.bsc.postalservice.postalpackage.InMemoryPostalPackageRepository;
+import com.bsc.postalservice.postalpackage.PostalPackage;
+import com.bsc.postalservice.postalpackage.PostalPackageRepository;
 import com.bsc.postalservice.utils.ThreadWithException;
 import lombok.val;
 import org.junit.Before;

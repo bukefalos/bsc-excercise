@@ -2,7 +2,7 @@ package com.bsc.postalservice;
 
 import com.bsc.postalservice.cli.*;
 import com.bsc.postalservice.fee.PostalFeeService;
-import com.bsc.postalservice.postalpackage.domain.PostalPackageRepository;
+import com.bsc.postalservice.postalpackage.PostalPackageRepository;
 import com.bsc.postalservice.schedule.ConsoleSummaryWriterJob;
 import com.bsc.postalservice.schedule.Job;
 import org.apache.commons.cli.Option;

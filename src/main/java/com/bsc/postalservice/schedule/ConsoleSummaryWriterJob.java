@@ -1,6 +1,6 @@
 package com.bsc.postalservice.schedule;
 
-import com.bsc.postalservice.postalpackage.domain.PostalPackageRepository;
+import com.bsc.postalservice.postalpackage.PostalPackageRepository;
 
 public class ConsoleSummaryWriterJob implements Job {
 

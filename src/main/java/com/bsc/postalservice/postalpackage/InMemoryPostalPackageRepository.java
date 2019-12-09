@@ -1,8 +1,4 @@
-package com.bsc.postalservice.postalpackage.infrastructure;
-
-import com.bsc.postalservice.postalpackage.domain.PostalPackage;
-import com.bsc.postalservice.postalpackage.domain.PostalPackageRepository;
-import com.bsc.postalservice.postalpackage.domain.PostalPackageSummary;
+package com.bsc.postalservice.postalpackage;
 
 import java.util.ArrayList;
 import java.util.List;

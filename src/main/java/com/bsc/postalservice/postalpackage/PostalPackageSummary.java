@@ -1,4 +1,4 @@
-package com.bsc.postalservice.postalpackage.domain;
+package com.bsc.postalservice.postalpackage;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;

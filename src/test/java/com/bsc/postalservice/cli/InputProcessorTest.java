@@ -1,7 +1,7 @@
 package com.bsc.postalservice.cli;
 
-import com.bsc.postalservice.postalpackage.domain.PostalPackageRepository;
-import com.bsc.postalservice.postalpackage.infrastructure.InMemoryPostalPackageRepository;
+import com.bsc.postalservice.postalpackage.InMemoryPostalPackageRepository;
+import com.bsc.postalservice.postalpackage.PostalPackageRepository;
 import org.junit.Before;
 import org.junit.Test;
 
