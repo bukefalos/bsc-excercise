@@ -1,6 +1,7 @@
 package com.bsc.postalservice.cli;
 
 import com.bsc.postalservice.fee.PostalFeeService;
+import com.bsc.postalservice.fee.PostalFeeServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ public class OperationAddFeeTest {
 
   @Before
   public void init() {
-    PostalFeeService postalFeeService = new PostalFeeService();
+    PostalFeeService postalFeeService = new PostalFeeServiceImpl();
     operationAddFee = new OperationAddFee(postalFeeService);
   }
 

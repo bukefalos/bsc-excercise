@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class PostalFeeServiceTest {
+public class PostalFeeServiceImplTest {
 
   private PostalFeeService feeService;
 
@@ -25,7 +25,7 @@ public class PostalFeeServiceTest {
       0.5      0.70
       0.2      0.50
      */
-    feeService = new PostalFeeService();
+    feeService = new PostalFeeServiceImpl();
     feeService.addFeeEntry(0.5f, 0.70f);
     feeService.addFeeEntry(2f, 1.50f);
     feeService.addFeeEntry(0.2f, 0.50f);
@@ -50,7 +50,7 @@ public class PostalFeeServiceTest {
 
   @Test
   public void thatFeeServiceWorksWithoutAnyEntries() {
-    PostalFeeService emptyFeeService = new PostalFeeService();
+    PostalFeeService emptyFeeService = new PostalFeeServiceImpl();
     assertThat(emptyFeeService.getFeeBasedOnWeight(5.0f), is(0.0f));
   }
 
