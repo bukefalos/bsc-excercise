@@ -1,6 +1,7 @@
 # bsc-excercise
 
 [![Build Status](https://travis-ci.org/bukefalos/bsc-excercise.svg?branch=master)](https://travis-ci.org/bukefalos/bsc-excercise)
+[![Coverage Status](https://coveralls.io/repos/github/bukefalos/bsc-excercise/badge.svg?branch=master)](https://coveralls.io/github/bukefalos/bsc-excercise?branch=master)
 
 Postal package program exercise which is able to:
 
