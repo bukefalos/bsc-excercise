@@ -1,12 +1,21 @@
 package com.bsc.postalservice.postalpackage.domain;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.reverseOrder;
 
 public class PostalPackageSummary {
 
-  Map<String, PostalPackage> summary;
+  private Map<String, PostalPackage> summary;
+
+  private DecimalFormat weightFormat = new DecimalFormat("0.000");
+  private DecimalFormat feeFormat = new DecimalFormat("0.00");
 
   public PostalPackageSummary() {
     summary = new HashMap<>();
@@ -53,16 +62,24 @@ public class PostalPackageSummary {
 
   public String toString(boolean includeFees) {
     StringBuilder stringBuilder = new StringBuilder();
-    summary.forEach((key, postalCodeSummary) -> {
+    orderByWeight().forEach((key, postalCodeSummary) -> {
       stringBuilder.append(key);
       stringBuilder.append(" ");
-      stringBuilder.append(postalCodeSummary.getWeight());
+      stringBuilder.append(weightFormat.format(postalCodeSummary.getWeight()));
       if(includeFees) {
         stringBuilder.append(" ");
-        stringBuilder.append(postalCodeSummary.getFee());
+        stringBuilder.append(feeFormat.format(postalCodeSummary.getFee()));
       }
       stringBuilder.append("\n");
     });
     return stringBuilder.toString();
+  }
+
+  private HashMap<String, PostalPackage> orderByWeight() {
+    return summary.entrySet()
+        .stream()
+        .sorted(comparing(summary -> summary.getValue().getWeight(), reverseOrder()))
+        .collect(Collectors.toMap(
+            Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
   }
 }
