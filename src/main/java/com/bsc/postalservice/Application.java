@@ -39,17 +39,17 @@ public class Application {
     InputProcessor feeProcessor = new InputProcessor(new OperationsFactory(feeOperations));
 
     FixedPeriodJobScheduler scheduler = new FixedPeriodJobScheduler();
-    ConsoleSummaryWriterJob job = new ConsoleSummaryWriterJob(postalPackageRepository);
+    ConsoleSummaryWriterJob job = new ConsoleSummaryWriterJob(postalPackageRepository, true);
 
     try {
       if (args.length >= 1) {
-        System.out.println("Processing file input");
-        packageProcessor.processInput(new FileInputStream(new File(args[0])), System.out);
-
         if(args.length == 2) {
           System.out.println("Processing fee structure input");
           feeProcessor.processInput(new FileInputStream(new File(args[1])), System.out);
         }
+
+        System.out.println("Processing file input");
+        packageProcessor.processInput(new FileInputStream(new File(args[0])), System.out);
       }
 
 

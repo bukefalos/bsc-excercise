@@ -31,9 +31,9 @@ public class InMemoryPostalPackageRepositoryTest {
 
     val summary =  postalPackageRepository.getGroupedSummaryByCode();
     assertThat(summary.size(), is(3));
-    assertThat(summary.get("04011"), is(7.7f));
-    assertThat(summary.get("04022"), is(5.5f));
-    assertThat(summary.get("04033"), is(5.5f));
+    assertThat(summary.getTotalWeight("04011"), is(7.7f));
+    assertThat(summary.getTotalWeight("04022"), is(5.5f));
+    assertThat(summary.getTotalWeight("04033"), is(5.5f));
   }
 
   @Test
@@ -45,11 +45,11 @@ public class InMemoryPostalPackageRepositoryTest {
         new PostalPackage("04011", 6.6f)
     );
     postalPackageRepository.addAll(postalPackages);
-    val summary =  postalPackageRepository.getGroupedSummaryByCode();
+    val summary = postalPackageRepository.getGroupedSummaryByCode();
     assertThat(summary.size(), is(3));
-    assertThat(summary.get("04011"), is(7.7f));
-    assertThat(summary.get("04022"), is(5.5f));
-    assertThat(summary.get("04033"), is(5.5f));
+    assertThat(summary.getTotalWeight("04011"), is(7.7f));
+    assertThat(summary.getTotalWeight("04022"), is(5.5f));
+    assertThat(summary.getTotalWeight("04033"), is(5.5f));
   }
 
   @Test

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Collections.synchronizedList;
-import static java.util.stream.Collectors.toMap;
 
 public class InMemoryPostalPackageRepository implements PostalPackageRepository {
 
@@ -31,8 +30,7 @@ public class InMemoryPostalPackageRepository implements PostalPackageRepository 
   @Override
   public PostalPackageSummary getGroupedSummaryByCode() {
     synchronized (postalPackageList) {
-      return postalPackageList.stream()
-          .collect(toMap(PostalPackage::getPostalCode, PostalPackage::getWeight, Float::sum, PostalPackageSummary::new));
+      return new PostalPackageSummary(postalPackageList);
     }
   }
 }
