@@ -18,12 +18,8 @@ Postal package program exercise which is able to:
 There are two options:
 
  1. Use one of released version with executable scripts from *release* section
- 2. Build the most up-to date version with executable scripts by simply running following command in project root: 
-
- 
-    ./gradlew clean install
-    
-After installation was successful, find binaries at `build/install/postalservice/bin` directory relative to root.
+ 2. Build the most up-to date version with executable scripts by simply running following command in project root: `./gradlew clean install`
+    After installation was successful, find binaries at `build/install/postalservice/bin` directory relative to root.
 
    
 ## Usage
