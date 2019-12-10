@@ -15,16 +15,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 
-import static com.bsc.postalservice.schedule.ConsoleSummaryWriterJob.PACKAGE_SUMMARY_FOOTER;
-import static com.bsc.postalservice.schedule.ConsoleSummaryWriterJob.PACKAGE_SUMMARY_HEADER;
+import static com.bsc.postalservice.schedule.SummaryWriterJob.PACKAGE_SUMMARY_FOOTER;
+import static com.bsc.postalservice.schedule.SummaryWriterJob.PACKAGE_SUMMARY_HEADER;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ConsoleSummaryWriterJobTest {
+public class SummaryWriterJobTest {
 
-  private ConsoleSummaryWriterJob summaryWriterJob;
+  private SummaryWriterJob summaryWriterJob;
   private ByteArrayOutputStream writer;
 
   @Mock
@@ -34,7 +34,7 @@ public class ConsoleSummaryWriterJobTest {
   public void init() {
     MockitoAnnotations.initMocks(repository);
     writer = new ByteArrayOutputStream();
-    summaryWriterJob = new ConsoleSummaryWriterJob(repository, true, new PrintStream(writer));
+    summaryWriterJob = new SummaryWriterJob(repository, true, new PrintStream(writer));
   }
 
   @Test

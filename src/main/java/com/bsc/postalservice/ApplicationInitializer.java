@@ -3,8 +3,8 @@ package com.bsc.postalservice;
 import com.bsc.postalservice.fee.PostalFeeService;
 import com.bsc.postalservice.input.*;
 import com.bsc.postalservice.postalpackage.PostalPackageRepository;
-import com.bsc.postalservice.schedule.ConsoleSummaryWriterJob;
 import com.bsc.postalservice.schedule.Job;
+import com.bsc.postalservice.schedule.SummaryWriterJob;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.slf4j.Logger;
@@ -94,7 +94,7 @@ class ApplicationInitializer {
 
   static Job createConsoleSummaryJob(PostalPackageRepository repository, boolean includeFees) {
     Objects.requireNonNull(repository, "You need to initialize repository first");
-    return new ConsoleSummaryWriterJob(repository, includeFees);
+    return new SummaryWriterJob(repository, includeFees);
   }
 
 }

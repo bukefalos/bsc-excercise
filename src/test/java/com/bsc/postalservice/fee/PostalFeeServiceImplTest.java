@@ -26,13 +26,13 @@ public class PostalFeeServiceImplTest {
       0.2      0.50
      */
     feeService = new PostalFeeServiceImpl();
-    feeService.addFeeEntry(0.5f, 0.70f);
-    feeService.addFeeEntry(2f, 1.50f);
-    feeService.addFeeEntry(0.2f, 0.50f);
-    feeService.addFeeEntry(1f, 1.00f);
-    feeService.addFeeEntry(5f, 2.50f);
-    feeService.addFeeEntry(3f, 2.00f);
-    feeService.addFeeEntry(10f, 5.00f);
+    feeService.addFeeEntry(new PostalFee(0.5f, 0.70f));
+    feeService.addFeeEntry(new PostalFee(2f, 1.50f));
+    feeService.addFeeEntry(new PostalFee(0.2f, 0.50f));
+    feeService.addFeeEntry(new PostalFee(1f, 1.00f));
+    feeService.addFeeEntry(new PostalFee(5f, 2.50f));
+    feeService.addFeeEntry(new PostalFee(3f, 2.00f));
+    feeService.addFeeEntry(new PostalFee(10f, 5.00f));
   }
 
   @Test
@@ -44,7 +44,7 @@ public class PostalFeeServiceImplTest {
 
   @Test
   public void thatOverrideBySameWeightWorks() {
-    feeService.addFeeEntry(10f, 5.5f);
+    feeService.addFeeEntry(new PostalFee(10f, 5.5f));
     assertThat(feeService.getFeeBasedOnWeight(12.0f), is(5.5f));
   }
 

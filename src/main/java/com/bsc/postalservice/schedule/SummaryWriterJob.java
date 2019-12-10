@@ -5,7 +5,7 @@ import com.bsc.postalservice.postalpackage.PostalPackageSummary;
 
 import java.io.PrintStream;
 
-public class ConsoleSummaryWriterJob implements Job {
+public class SummaryWriterJob implements Job {
 
   public static final String PACKAGE_SUMMARY_HEADER = "\n*** Package summary ***\n";
   public static final String PACKAGE_SUMMARY_FOOTER = "=== Package summary end ===";
@@ -14,13 +14,13 @@ public class ConsoleSummaryWriterJob implements Job {
   private Boolean includeFees;
   private PrintStream writer;
 
-  public ConsoleSummaryWriterJob(PostalPackageRepository repository, Boolean includeFees, PrintStream writer) {
+  public SummaryWriterJob(PostalPackageRepository repository, Boolean includeFees, PrintStream writer) {
     this.repository = repository;
     this.includeFees = includeFees;
     this.writer = writer;
   }
 
-  public ConsoleSummaryWriterJob(PostalPackageRepository repository, Boolean includeFees) {
+  public SummaryWriterJob(PostalPackageRepository repository, Boolean includeFees) {
     this(repository, includeFees, System.out);
   }
 
