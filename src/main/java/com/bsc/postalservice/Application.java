@@ -46,7 +46,7 @@ public class Application {
     } catch (ParseException exp) {
       System.err.println("Parsing failed.  Reason: " + exp.getMessage());
       HelpFormatter formatter = new HelpFormatter();
-      formatter.printHelp("bsc", options, true);
+      formatter.printHelp("postalservice", options, true);
     } catch (FileNotFoundException fnf) {
       System.err.println("Not able to load initial file");
     } catch (TerminateException terminate) {
