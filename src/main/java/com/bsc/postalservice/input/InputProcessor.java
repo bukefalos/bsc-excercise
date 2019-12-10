@@ -1,4 +1,4 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -16,7 +16,7 @@ public class InputProcessor {
     try(Scanner inputScanner = new Scanner(input)) {
       do {
         String line = inputScanner.nextLine();
-        CLIOperation operation = operationsFactory.getOperation(line);
+        InputOperation operation = operationsFactory.getOperation(line);
         out.println(operation.execute(line));
 
       } while (inputScanner.hasNext());

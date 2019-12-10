@@ -1,4 +1,4 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
 import org.junit.Test;
 
@@ -12,7 +12,7 @@ public class OperationsFactoryTest {
   @Test
   public void getUnrecognizedOperation() {
     OperationsFactory operationsFactory = new OperationsFactory(new ArrayList<>());
-    CLIOperation operation = operationsFactory.getOperation("anything");
+    InputOperation operation = operationsFactory.getOperation("anything");
     assertThat(operation, instanceOf(OperationUnrecognized.class));
   }
 

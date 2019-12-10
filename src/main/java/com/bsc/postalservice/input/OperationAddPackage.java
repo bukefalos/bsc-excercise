@@ -1,11 +1,11 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
 import com.bsc.postalservice.fee.PostalFeeService;
 import com.bsc.postalservice.postalpackage.PostalPackage;
 import com.bsc.postalservice.postalpackage.PostalPackageFormatException;
 import com.bsc.postalservice.postalpackage.PostalPackageRepository;
 
-public class OperationAddPackage implements CLIOperation {
+public class OperationAddPackage implements InputOperation {
 
   public static final String PACKAGE_ADDED = "Package added";
   public static final String PACKAGE_WRONG_FORMAT = "Wrong format";

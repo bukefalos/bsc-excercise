@@ -1,10 +1,10 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
 import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.compile;
 
-public class OperationQuit implements CLIOperation {
+public class OperationQuit implements InputOperation {
 
   private Pattern pattern = compile("^quit$");
 

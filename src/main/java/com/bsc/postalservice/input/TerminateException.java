@@ -1,4 +1,4 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
 public class TerminateException extends Exception {
 }

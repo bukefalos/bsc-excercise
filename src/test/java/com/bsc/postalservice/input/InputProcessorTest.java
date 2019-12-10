@@ -1,4 +1,4 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
 import com.bsc.postalservice.postalpackage.InMemoryPostalPackageRepository;
 import com.bsc.postalservice.postalpackage.PostalPackageRepository;

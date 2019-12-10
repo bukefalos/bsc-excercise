@@ -1,6 +1,6 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
-public interface CLIOperation {
+public interface InputOperation {
 
   boolean canExecute(String input);
 

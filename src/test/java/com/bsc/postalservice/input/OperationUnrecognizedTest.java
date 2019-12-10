@@ -1,4 +1,4 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 public class OperationUnrecognizedTest {
 
-  private CLIOperation operation;
+  private InputOperation operation;
 
   @Before
   public void init() {

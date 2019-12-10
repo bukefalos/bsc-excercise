@@ -1,7 +1,7 @@
 package com.bsc.postalservice;
 
-import com.bsc.postalservice.cli.*;
 import com.bsc.postalservice.fee.PostalFeeService;
+import com.bsc.postalservice.input.*;
 import com.bsc.postalservice.postalpackage.PostalPackageRepository;
 import com.bsc.postalservice.schedule.ConsoleSummaryWriterJob;
 import com.bsc.postalservice.schedule.Job;
@@ -69,7 +69,7 @@ class ApplicationInitializer {
 
 
   static InputProcessor feeInputProcessor(PostalFeeService feeService) {
-    List<CLIOperation> feeOperations = Collections.singletonList(
+    List<InputOperation> feeOperations = Collections.singletonList(
         new OperationAddFee(feeService)
     );
     return new InputProcessor(new OperationsFactory(feeOperations));
@@ -80,7 +80,7 @@ class ApplicationInitializer {
   }
 
   static InputProcessor postalPackageInputProcessor(PostalPackageRepository repository, PostalFeeService feeService) {
-    List<CLIOperation> packageOperations = Arrays.asList(
+    List<InputOperation> packageOperations = Arrays.asList(
         new OperationAddPackage(repository, feeService),
         new OperationQuit()
     );

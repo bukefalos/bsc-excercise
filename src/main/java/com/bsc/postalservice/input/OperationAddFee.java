@@ -1,11 +1,11 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
 import com.bsc.postalservice.fee.PostalFee;
 import com.bsc.postalservice.fee.PostalFeeFormatException;
 import com.bsc.postalservice.fee.PostalFeeService;
 
 
-public class OperationAddFee implements CLIOperation {
+public class OperationAddFee implements InputOperation {
 
   public static final String FEE_ADDED = "Fee processed";
   public static final String FEE_WRONG_FORMAT = "Fee wrong format";

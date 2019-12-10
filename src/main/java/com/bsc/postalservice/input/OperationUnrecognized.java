@@ -1,6 +1,6 @@
-package com.bsc.postalservice.cli;
+package com.bsc.postalservice.input;
 
-public class OperationUnrecognized implements CLIOperation {
+public class OperationUnrecognized implements InputOperation {
 
   public static String UNRECOGNIZED_FORMAT_MSG_WITH_HELP = "Unrecognized input format, please try again";
 
