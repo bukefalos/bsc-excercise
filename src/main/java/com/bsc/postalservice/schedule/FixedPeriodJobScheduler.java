@@ -12,10 +12,15 @@ public class FixedPeriodJobScheduler {
 
   private ScheduledExecutorService scheduler;
 
+  public FixedPeriodJobScheduler() {
+    this(Executors.newScheduledThreadPool(1));
+  }
+
+  public FixedPeriodJobScheduler(ScheduledExecutorService scheduler) {
+    this.scheduler = scheduler;
+  }
+
   public void scheduleJob(Job job, FixedPeriodJobDetail jobDetail) {
-    if (scheduler == null) {
-      scheduler = Executors.newScheduledThreadPool(1);
-    }
     scheduler.scheduleAtFixedRate(
         wrapToRunnable(job),
         jobDetail.getDelay(),
