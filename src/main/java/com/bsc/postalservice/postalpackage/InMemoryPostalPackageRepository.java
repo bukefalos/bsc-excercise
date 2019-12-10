@@ -1,6 +1,7 @@
 package com.bsc.postalservice.postalpackage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.synchronizedList;
@@ -25,6 +26,6 @@ public class InMemoryPostalPackageRepository implements PostalPackageRepository 
 
   @Override
   public List<PostalPackage> getAll() {
-    return new ArrayList<>(postalPackageList);
+    return Collections.unmodifiableList(postalPackageList);
   }
 }
